@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="referrer" content="no-referrer"/><!--页面头部添加-->
+    <title>会员购</title>
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <link rel="stylesheet" href="/css/index.css">
+</head>
+<body>
+<div class="layui-container">
+    <!--    导航条-->
+    <div class="layui-row">
+        <ul class="layui-nav layui-bg-white" lay-filter="">
+            <li class="layui-nav-item" id="logo">
+                <a href="#" class="nav-header-logo"><img width="130px" height="27px"
+                                                         src="https://gitee.com/ahoges/MyPhotoes/raw/master/usershop/logo.png"></a>
+            </li>
+            <li class="layui-nav-item black-font"><a href="" style="color: #808080"><img width="18px" height="18px"
+                                                                                         src="https://gitee.com/ahoges/MyPhotoes/raw/master/usershop/zhuzhan.png">主站</a>
+            </li>
+
+            <div class="nav-right">
+                <input id="head-search" type="text" placeholder="活动、嘉宾、场馆">
+                <i class="layui-icon layui-icon-search" style="font-size: 30px;color: grey"></i>
+
+                <li class="layui-nav-item" id="user">
+                    <a href=""><img src="https://gitee.com/ahoges/MyPhotoes/raw/master/usershop/touxiang.jpg"
+                                    class="layui-nav-img" style="color: #808080">我</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;" style="color: #808080">修改信息</a></dd>
+                        <dd><a href="javascript:;" style="color: #808080">安全管理</a></dd>
+                        <dd><a href="javascript:;" style="color: #808080">退了</a></dd>
+                    </dl>
+                </li>
+
+                <li class="layui-nav-item" id="order"><a href="" style="color: #808080">订单中心</a></li>
+            </div>
+        </ul>
+    </div>
+</div>
+<!-- 条目中可以是任意内容，如：<img src=""> -->
+<!--幕布-->
+<div class="layui-fluid">
+    <div class="layui-carousel my-banner" id="test1">
+        <div carousel-item>
+            <div>
+                <img src="/img/banner/bilibili-banner1.jpeg">
+            </div>
+            <div>
+                <img src="/img/banner/bilibili-banner2.jpeg">
+            </div>
+        </div>
+    </div>
+</div>
+<!--筛选栏-->
+<div id="app">
+    <div class="layui-container city-selector">
+        <div class="layui-tab layui-tab-card">
+            <ul class="layui-tab-title">
+                <li class="layui-this">城市:</li>
+                <li>全国</li>
+                <li v-for="mainCity in mainCities">{{mainCity.name}}</li>
+                <li>更多城市∨</li>
+            </ul>
+            <ul class="layui-tab-title">
+                <li class="layui-this">类型:</li>
+                <li>全部类型</li>
+                <li>演出</li>
+                <li>展览</li>
+                <li>本地生活</li>
+            </ul>
+            <ul class="layui-tab-title">
+                <li class="layui-this">筛选:</li>
+                <li>全部时间</li>
+                <li>本周</li>
+                <li>本月</li>
+            </ul>
+        </div>
+    </div>
+
+    <!--商品栏-->
+    <div class="project-list layui-container">
+        <div class="layui-row">
+            <div v-for="ticket in tickets" class="project-list-item layui-col-xs6">
+                <div class="layui-card">
+                    <div class="project-list-item-img"><img width="175px" height="233px" v-bind:src="ticket.cover"/>
+                    </div>
+                    <div class="project-list-item-detail">
+                        <h2>{{ticket.projectName}}</h2>
+                        <p>{{ticket.showTime}} - {{ticket.endTime}}</p>
+                        <p>{{ticket.city}} {{ticket.venueName}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--分页-->
+        <div class="container large">
+            <div class="pagination">
+                <ul>
+                    <li><a href="javascript:void(0)"></a></li>
+                    <li v-for="pageNum in pageNums"><a @click='listTicketsByTouch(pageNum)'></a></li>
+                    <li><a href="javascript:void(0)"></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/js/jquery-3.2.1.min.js"></script>
+<script src="/js/axios.js"></script>
+<script src="/js/vue.js"></script>
+<script src="/layui/layui.js"></script>
+<script src="/js/index.js"></script>
+<script>
+    //注意：导航 依赖 element 模块，否则无法进行功能性操作
+    layui.use('element', function () {
+        var element = layui.element;
+
+        //…
+    });
+
+    layui.use('carousel', function () {
+        var carousel = layui.carousel;
+        //建造实例
+        carousel.render({
+            elem: '#test1'
+            , width: '100%' //设置容器宽度
+            , arrow: 'always' //始终显示箭头
+            //,anim: 'updown' //切换动画方式
+        });
+    });
+</script>
+</body>
+</html>

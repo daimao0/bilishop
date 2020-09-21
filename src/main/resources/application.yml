@@ -1,0 +1,68 @@
+
+server:
+  port: 8080
+
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://60.205.247.46:3306/bilibilishop?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+  redis:
+    host: 60.205.247.46
+    port: 6379
+    password: 3d9188577cc9bfe9291ac66b5cc872b7
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1ms
+        max-idle: 8
+        min-idle: 0
+    timeout: 3000ms
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+
+#mybaits-plus相关配置
+mybatis-plus:
+  # MyBaits 别名包扫描路径，通过该属性可以给包中的类注册别名
+  type-aliases-package: com.damao.bilibilishop.module
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    # 驼峰下划线转换
+    map-underscore-to-camel-case: true
+    # 配置的缓存的全局开关
+    cache-enabled: true
+    # 延时加载的开关
+    lazy-loading-enabled: true
+    # 开启的话，延时加载一个属性时会加载该对象全部属性，否则按需加载属性
+    multiple-result-sets-enabled: true
+    use-generated-keys: true
+    default-statement-timeout: 60
+    default-fetch-size: 100
+
+# 自定义redis key
+redis:
+  key:
+    prefix:
+      authCode: "app:authCode:"
+      userToken: "app:token:prefix"
+    expire:
+      authCode: 1200
+      userToken: 36000000
+
+# 自定义 jwt key
+jwt:
+  tokenHeader: Authorization
+  secret: daimao
+  expiration: 604800  # 秒 一周
+  tokenHead: Bearer  #JWT负载中拿到开头
+  currentTimeMillis: jwtCurrentTimeMillis
+  # 配置白名单（不需要认证）
+  antMatchers: /login/**,/register/**,/static/**
+#rawPWD加密密文
+rawPWD: "daimao"
