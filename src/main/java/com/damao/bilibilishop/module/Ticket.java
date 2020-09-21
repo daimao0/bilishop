@@ -19,7 +19,7 @@ import lombok.experimental.Accessors;
 @TableName("t_ticket")
 public class Ticket {
     @TableId(value = "id")
-    private int id;
+    private Integer id;
 
     @TableField(value = "project_name")
     private String projectName;
