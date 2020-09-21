@@ -11,7 +11,7 @@ var app = new Vue({
     },
     methods:{
         listMainCities:function(){
-            axios.get("http://127.0.0.1:8080/listMainCities").then(res=>{
+            axios.get("/listMainCities").then(res=>{
                 this.mainCities = res["data"]["data"]
                 console.log(this.mainCities)
             }).catch(ret=>{
@@ -19,20 +19,20 @@ var app = new Vue({
             })
         },
         listMoreCities:function () {
-            axios.get("http://127.0.0.1:8080/listMoreCities").then(res=>{
+            axios.get("/listMoreCities").then(res=>{
                 this.moreCities = res["data"]["data"]
                 console.log(this.moreCities)
             })
         },
         listTickets:function () {
-            axios.get("http://127.0.0.1:8080/ticket/list/1").then(res=>{
+            axios.get("/ticket/list/1").then(res=>{
                 console.log(res)
                 this.tickets = res["data"]["data"]["result"]
                 this.pageNums = res["data"]["data"]["pageNums"]
             })
         },
         listTicketsByTouch:function (page) {
-            axios.get("http://127.0.0.1:8080/ticket/list/"+page).then(res=>{
+            axios.get("/ticket/list/"+page).then(res=>{
                 this.tickets = res["data"]["data"]["result"]
                 this.pageNums = res["data"]["data"]["pageNums"]
             })
