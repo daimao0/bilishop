@@ -9,6 +9,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
+
 /**
  * @author 呆毛
  */
@@ -17,7 +19,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Accessors(chain = true)
 @TableName("t_ticket")
-public class Ticket {
+public class Ticket implements Serializable {
     @TableId(value = "id")
     private Integer id;
 

@@ -47,4 +47,12 @@ public interface RedisService {
      * @param key
      */
     void remove(String key);
+
+    /**
+     * 实现自增
+     * @param key  键
+     * @param liveTime 存活时间
+     * @return  返回value
+     */
+    Long incr(String key,Long liveTime);
 }
