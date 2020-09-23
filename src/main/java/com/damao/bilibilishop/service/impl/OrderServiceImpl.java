@@ -1,6 +1,8 @@
 package com.damao.bilibilishop.service.impl;
 
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.damao.bilibilishop.common.api.CommonResult;
 import com.damao.bilibilishop.dao.OrderDao;
 import com.damao.bilibilishop.dao.OrderItemDao;
@@ -8,6 +10,7 @@ import com.damao.bilibilishop.dao.OrderShippingDao;
 import com.damao.bilibilishop.module.Order;
 import com.damao.bilibilishop.module.OrderItem;
 import com.damao.bilibilishop.module.OrderShipping;
+import com.damao.bilibilishop.module.dto.OrderDto;
 import com.damao.bilibilishop.module.dto.param.OrderItemParam;
 import com.damao.bilibilishop.module.dto.param.OrderParam;
 import com.damao.bilibilishop.service.OrderService;
@@ -17,7 +20,8 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author 呆毛
@@ -102,5 +106,30 @@ public class OrderServiceImpl implements OrderService {
                 .setReceiverZip(orderParam.getOrderShippingParam().getReceiverZip());
         orderShippingDao.insert(orderShipping);
         return CommonResult.success(orderId,"订单创建成功");
+    }
+
+    /**
+     * 通过前端传来的userId来返回该用户的全部订单
+     * @param userId 用户id
+     * @return
+     */
+    @Override
+    public CommonResult<List<OrderDto>>listOrdersByUserId(Long userId){
+        List<Order> orders = orderDao.selectList(new QueryWrapper<Order>().eq("user_id", userId));
+        ArrayList<OrderDto> orderDtos = new ArrayList<>();
+        for (Order order:orders){
+            String orderId = order.getOrderId();
+            //通过用户id获取用户订单详情
+            List<OrderItem> orderItem = orderItemDao.selectList(new QueryWrapper<OrderItem>().eq("order_id", orderId));
+            //获取物流信息
+            OrderShipping orderShipping = orderShippingDao.selectById(orderId);
+            //封装元素
+            OrderDto orderDto = new OrderDto().setOrder(order)
+                    .setOrderItems(orderItem).
+                            setOrderShipping(orderShipping);
+            //添加到list中
+            orderDtos.add(orderDto);
+        }
+        return CommonResult.success(orderDtos);
     }
 }

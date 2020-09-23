@@ -10,8 +10,8 @@ public class SearchTest {
     @Autowired
     TicketDao ticketDao;
 
-    @Test
-    public void listTicketsBySearch(){
-        ticketDao.listTicketsBySearch("上海%",1*16,16);
-    }
+//    @Test
+//    public void listTicketsBySearch(){
+//        ticketDao.listTicketsBySearch("上海%",1*16,16);
+//    }
 }
