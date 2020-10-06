@@ -4,6 +4,8 @@ import com.damao.bilibilishop.common.api.CommonResult;
 import com.damao.bilibilishop.module.Ticket;
 import com.damao.bilibilishop.module.dto.TicketDto;
 
+import java.io.IOException;
+
 /**
  * @author 呆毛
  */
@@ -30,4 +32,14 @@ public interface TicketService {
      * @return 返回结果
      */
     CommonResult<TicketDto> listTicketsBySearch(String searchContext,Integer page,Integer pageSize);
+
+    /**
+     *  通过搜索栏中的数据查询结果
+     * @param searchContext 查询内容
+     * @param page  第几页
+     * @param pageSize 页面大小
+     * @throws IOException
+     * @return 返回结果
+     */
+    CommonResult<TicketDto> searchTicketsByEs(String searchContext, Integer page, Integer pageSize) throws IOException;
 }
